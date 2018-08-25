@@ -1,0 +1,4 @@
+*.env
+*.pid
+docker-compose*
+!docker-compose.proj.yml
