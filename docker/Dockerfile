@@ -89,7 +89,7 @@ RUN apt-get update && apt-get install -y locales
 # https://www.thomas-krenn.com/en/wiki/Configure_Locales_in_Ubuntu
 # RUN update-locale ru_RU.utf8
 
-# нужна, чтобы во время `. ~/bw.bash` не было 
+# нужна, чтобы во время `. ~/bw.bash` не было
 # perl: warning: Falling back to the standard locale ("C").
 # perl: warning: Setting locale failed.
 # perl: warning: Please check that your locale settings:
@@ -104,8 +104,8 @@ RUN locale-gen ru_RU.utf8
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 # RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # https://askubuntu.com/questions/76013/how-do-i-add-locale-to-ubuntu-server
@@ -144,18 +144,18 @@ true
 
 # Switch to user "dev" from now
 USER dev
-
+ENV USER dev
 WORKDIR /home/dev/proj
 
 # ==============================================================================
 # ==============================================================================
 
 # все добавки к .bashrc далее будем писать в ._bashrc
-# приходиться использовать ._bashrc, т.к. в .bashrc есть блокировка от его 
+# приходиться использовать ._bashrc, т.к. в .bashrc есть блокировка от его
 # исполнения в неинтерактивном режиме (наверное, обосоновання)
-# чтобы можно было прочитать "наши" настройки в неинтерактином режиме, 
+# чтобы можно было прочитать "наши" настройки в неинтерактином режиме,
 # используем для их хранения ._bashrc
-RUN echo ". $HOME/._bashrc" >> "$HOME/.bashrc" 
+RUN echo ". $HOME/._bashrc" >> "$HOME/.bashrc"
 
 # ==============================================================================
 # ==============================================================================
@@ -167,7 +167,7 @@ RUN echo ". $HOME/proj/docker/main.env" >> "$HOME/._bashrc"
 # ================================ nvm =========================================
 
 COPY nvm /home/dev/.nvm
-RUN sudo chown -R dev $HOME/.nvm
+RUN sudo chown -R dev:dev $HOME/.nvm
 RUN echo 'export NVM_DIR="$HOME/.nvm"' >> $HOME/._bashrc
 RUN echo '. "$NVM_DIR/nvm.sh"  # This loads nvm' >> $HOME/._bashrc
 RUN echo '. "$NVM_DIR/bash_completion" # This loads nvm bash_completion' >> $HOME/._bashrc
